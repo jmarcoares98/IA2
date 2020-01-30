@@ -67,22 +67,22 @@ var bottomBarBtnClick = function() {
     //this changes the mode buttons
     document.getElementById(mode).classList.remove("menuItemSelected");
     document.getElementById(mode + "Div").style.display = "none";
-    document.getElementById(mode + "Menu").style.display = "none";
+    //document.getElementById(mode + "Menu").style.display = "none";
     this.classList.add("menuItemSelected");
-    let menuItems = document.getElementsByClassName(mode + "Item");
+    //let menuItems = document.getElementsByClassName(mode + "Item");
     //not displaying the other modes or changing pages
-    for (let i = 0; i < menuItems.length; ++i) {
-      menuItems[i].style.display = "none";
-    }
+    //for (let i = 0; i < menuItems.length; ++i) {
+    //  menuItems[i].style.display = "none";
+    //}
     //this is where the changes happen when switching modes to current mode
     mode = this.id;
     document.getElementById("topBarTitle").textContent = modeToTitle[mode];
     document.getElementById(mode + "Div").style.display = "block";
-    document.getElementById(mode + "Menu").style.display = "block";
-    menuItems = document.getElementsByClassName(mode + "Item");
-    for (let i = 0; i < menuItems.length; ++i) {
-      menuItems[i].style.display = "block";
-    }
+    //document.getElementById(mode + "Menu").style.display = "block";
+    //menuItems = document.getElementsByClassName(mode + "Item");
+    //for (let i = 0; i < menuItems.length; ++i) {
+    //  menuItems[i].style.display = "block";
+    //}
   }
 }
 
@@ -97,10 +97,12 @@ function login() {
 
   //Show bottom bar buttons and highlight feed mode button
   document.getElementById("bottomBar").style.visibility = "visible";
-  document.getElementById("feedMode").classList.add("menuItemSelected");
-  document.getElementById("roundsMode").classList.remove("menuItemSelected");
-  document.getElementById("coursesMode").classList.remove("menuItemSelected");
+  document.getElementById("displayDataMode").classList.add("menuItemSelected");
+  document.getElementById("addDataMode").classList.remove("menuItemSelected");
   
+  //Set mode to current mode
+  mode = "displayDataMode";
+
   //Change title bar to that of app start page
   document.getElementById("topBarTitle").textContent = modeToTitle[mode];
  
@@ -109,10 +111,7 @@ function login() {
 
   //hide login screen and show feed screen
   document.getElementById("loginModeDiv").style.display = "none";
-  document.getElementById(mode + "MainDiv").style.display = "block";
-
-  //Set mode to current mode
-  mode = "displayDataMode";
+  document.getElementById(mode + "Div").style.display = "block";
 }
 
 //loginInterface submit: When the login button is clicked, we rely on form
