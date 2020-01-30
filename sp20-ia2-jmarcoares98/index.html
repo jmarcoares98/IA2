@@ -51,7 +51,7 @@
       <img src="http://tiny.cc/sslogo" alt="Speed Score Logo" height="38px"
       width="38px">
       <span id="topBarTitle" style="color:white; font-size: 18px">
-      Welcome!</span>
+      </span>
   </div>
   
   
@@ -78,12 +78,12 @@
 
 <!-- BEGIN FIXED BOTTOM BAR -->
 <div id ="bottomBar" class="bottombar" style="z-index: 100">
-<a id="viewDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
+<a id="displayDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
 class="nonMenuItem fas fa-th-list"></span><span style="display:block;font-size:
-small">View Data</span></a>
+small">display data</span></a>
 <a id="addDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
 class="nonMenuItem fas fa-plus"></span><span style="display:block;font-size:
-small">Add Data</span></a>
+small">add data</span></a>
 </div>
 <!-- END FIXED BOTTOM BAR-->
  
@@ -94,18 +94,18 @@ small">Add Data</span></a>
       <h1></h1>
       <form id="loginInterface">
                  <label for="emailInput" style="padding:0px;
-                 font-size:24px">Email:
+                 font-size:24px">email:
                      <input class="form-control" type="email" 
-                     placeholder="Enter Email Address" id="emailInput"
+                     placeholder="enter email address" id="emailInput"
                      pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
                      style="text-align:center;width:90%; height:10%; font-size:
                      24px" required>
                  </label>
                  <p></p>
                  <label for="passwordInput" style="padding:0px;
-                 font-size:24px">Password: 
+                 font-size:24px">password: 
                      <input class="form-control" type="password"
-                     placeholder="Enter Password" id="passwordInput"
+                     placeholder="enter password" id="passwordInput"
                      pattern="[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};\':]+"
                      style="text-align:center;width:90%; height:10%; font-size:
                      24px" required>
@@ -114,7 +114,7 @@ small">Add Data</span></a>
              <button type="submit" id="loginBtn" class="loginBtn btn btn-primary
              btn-block btncolortheme" style="width:70%; font-size: 36px">
                <span id="loginBtnIcon"></span>
-                Log In
+                log in
                 </button>
              <br />
              <a role="button" class="loginBtn"><img
@@ -126,14 +126,14 @@ small">Add Data</span></a>
    </div>
  
    <!-- Activity feed page for viewing feed -->
-   <div id="viewDataPageDiv"  class="paddedPage">
-    <h1 align="center">Data Table Page</h1> <!-- <-- Change this-->
+   <div id="displayDataModeDiv"  class="paddedPage">
+    <h1 align="center">data table page</h1> <!-- <-- Change this-->
     <div w3-include-html="html/underConstruction.html" ></div>
   </div>
 
    <!-- Rounds page displaying the user's round history -->
-  <div id="addDataPageDiv" class="paddedPage">
-      <h1 align="center">Add Data Page</h1>
+  <div id="addDataModeDiv" class="paddedPage">
+      <h1 align="center">add data page</h1>
     <div w3-include-html="html/underConstruction.html" ></div>
   </div>
 
