@@ -7,9 +7,9 @@ var menuOpen = false; //Boolean variable to capture the state of the side menu.
 var mode = "loginMode"; //Variable captures current UI mode
 
 //Associative array maps modes to page titles
-var modeToTitle = {"displayDataMode": "display data",
-                   "addDataMode": "add data",
-                   "lodingMode": "welcome to my app"
+var modeToTitle = {"loginMode": "MARCO ARES IA2: welcome!",
+                   "displayDataMode": "MARCO ARES IA2: display data",
+                   "addDataMode": "MARCO ARES IA2: add data"
 };
 
 //Array of modes for the app, was introduced in class and now implementing

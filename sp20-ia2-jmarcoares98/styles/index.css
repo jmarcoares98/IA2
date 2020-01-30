@@ -26,7 +26,7 @@
             width: 0; /* Menu hidden -- will be opened on click */
             position: fixed; /* Menu stays in place regardless of other content */
             z-index: 150; /* Force the menu to be at front */
-            top: 48px; /* Position menu 48 px from top of screen; accomodates top navbar */
+            top: 60px; /* Position menu 48 px from top of screen; accomodates top navbar */
             left: 0; /* Position the menu on the left hand side */
             background-color: steelblue; /* Background color is dark blue */
             overflow-x: hidden; /* Don't allow horizontal scroll */
@@ -89,22 +89,6 @@
             font-size:30px;
             cursor:pointer;
             text-align:center;
-        }
-
-        .aboutItem {
-              position: fixed;
-              padding: 0 20px;
-              bottom: 55px;
-              width: 19.6%;
-              font-size: 16px;
-        }
-
-        .logoutItem {
-              position: fixed;
-              padding: 0 20px;
-              bottom: 0;
-              width: 19.6%;
-              font-size: 16px;
         }
 
         /* side menu styling when menu item selected */
@@ -268,4 +252,12 @@ body {
     text-align: center;
   }
     
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;
+  }
   

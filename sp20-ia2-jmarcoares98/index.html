@@ -70,8 +70,18 @@
  <!--Mode buttons show current mode Action buttons are contextual; they provide
     easy access to most important functionality in current mode 
   -->
-  <a id = "aboutBtn" class = "aboutItem"><span class= "fas fa-info-circle"></span>&nbsp;about</a>
-  <a id="logOutBtn" class = "logoutItem">"<span class="fas fa-sign-out-alt"></span>&nbsp;log out</a>
+  <div id = "displayDataModeMenu">
+    <a id = "displayDataModeItem"><span class="fas fa-list-alt"></span>&nbsp;data table</a>
+  </div>
+
+  <div id = "addDataModeMenu">
+    <a id = "addDataModeItem"><span class="fas fa-plus-circle"></span>&nbsp;add data</a>
+  </div>
+
+  <a id = "aboutBtn">
+    <span class= "fas fa-info-circle"></span>&nbsp;about</a>
+  <a id="logOutBtn">
+    <span class="fas fa-sign-out-alt"></span>&nbsp;log out</a>
    <!-- END GROUP OF MODE/ACTION BUTTONS -->
 </div>
 <!-- END MAIN MENU CONTENT -->
@@ -130,7 +140,7 @@ small">add data</span></a>
    <!-- Activity feed page for viewing feed -->
    <div id="displayDataModeDiv"  class="paddedPage">
     <h1 align="center">data table page</h1> <!-- <-- Change this-->
-    <div w3-include-html="html/underConstruction.html" ></div>
+    <div w3-include-html="html/displayData.html" ></div>
   </div>
 
    <!-- Rounds page displaying the user's round history -->

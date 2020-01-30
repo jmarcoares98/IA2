@@ -11,13 +11,14 @@
     //Hide all pages except for Login Page, which is the start page.
     document.getElementById("displayDataModeDiv").style.display = "none";
     document.getElementById("addDataModeDiv").style.display = "none";
+    document.getElementById("addDataModeMenu").style.display = "none";
 
     document.getElementById("loginModeDiv").style.display = "block";
     //Clear all text from email and password fields
     //TO DO: Fill in
 
     //Set top bar text
-    document.getElementById("topBarTitle").textContent = "welcome to my app";
+    document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: welcome!";
 
     //Hide the bottom bar initially
     document.getElementById("bottomBar").style.visibility = "hidden";
@@ -67,22 +68,22 @@ var bottomBarBtnClick = function() {
     //this changes the mode buttons
     document.getElementById(mode).classList.remove("menuItemSelected");
     document.getElementById(mode + "Div").style.display = "none";
-    //document.getElementById(mode + "Menu").style.display = "none";
+    document.getElementById(mode + "Menu").style.display = "none";
     this.classList.add("menuItemSelected");
-    //let menuItems = document.getElementsByClassName(mode + "Item");
+    let menuItems = document.getElementsByClassName(mode + "Item");
     //not displaying the other modes or changing pages
-    //for (let i = 0; i < menuItems.length; ++i) {
-    //  menuItems[i].style.display = "none";
-    //}
+    for (let i = 0; i < menuItems.length; ++i) {
+      menuItems[i].style.display = "none";
+    }
     //this is where the changes happen when switching modes to current mode
     mode = this.id;
     document.getElementById("topBarTitle").textContent = modeToTitle[mode];
     document.getElementById(mode + "Div").style.display = "block";
-    //document.getElementById(mode + "Menu").style.display = "block";
-    //menuItems = document.getElementsByClassName(mode + "Item");
-    //for (let i = 0; i < menuItems.length; ++i) {
-    //  menuItems[i].style.display = "block";
-    //}
+    document.getElementById(mode + "Menu").style.display = "block";
+    menuItems = document.getElementsByClassName(mode + "Item");
+    for (let i = 0; i < menuItems.length; ++i) {
+      menuItems[i].style.display = "block";
+    }
   }
 }
 
