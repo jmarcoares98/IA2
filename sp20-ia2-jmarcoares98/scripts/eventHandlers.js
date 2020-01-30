@@ -16,16 +16,14 @@
 
     document.getElementById("loginModeDiv").style.display = "block";
     //Clear all text from email and password fields
-    //TO DO: Fill in
+    document.getElementById("emailInput").value = "";
+    document.getElementById("passwordInput").value = "";
 
     //Set top bar text
     document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: welcome!";
 
     //Hide the bottom bar initially
     document.getElementById("bottomBar").style.visibility = "hidden";
-
-    //Hide all menu items except for items of current mode:
-    //TO DO: Fill in
 
     //Disable menu button:
     document.getElementById("menuBtn").disabled = true;
@@ -34,7 +32,10 @@
     mode = "loginMode";
 
     //set the input focus to the email field
-    //TO DO: Fill in
+    document.getElementById("emailInput").focus();
+
+    document.getElementById("birthDate").valueAsNumber = 
+      Date.now()-(new Date()).getTimezoneOffset()*60000;
   }
 
   //document click: When the user clicks anywhere in the doc and the menu is open
@@ -117,19 +118,31 @@ function login() {
 
   //Change title bar to that of app start page
   document.getElementById("topBarTitle").textContent = modeToTitle[mode];
- 
-  //Show only the menu items for current mode
-  //TO DO: Fill in
 
   //hide login screen and show feed screen
   document.getElementById("loginModeDiv").style.display = "none";
   document.getElementById(mode + "MainDiv").style.display = "block";
+
+  //local storage
+  let thisUser = document.getElementById("emailInput").value;
+  localStorage.setItem("userName",thisUser);
+
+  let data = localStorage.getItem("userData");
+  if(data == null) {
+    localStorage.setItem("userData",
+    JSON.stringify({thisUser : {"name" : "", "birthday": 0}})); 
+  }
+  else{
+    data = JSON.parse(data);
+    if  (!data.hasOwnProperty(thisUser)) { 
+      data[thisUser] = {"name": "", "birthday": 0}; 
+      localStorage.setItem("userData",JSON.stringify(data));
+    }
+  }
 }
 
 //loginInterface submit: When the login button is clicked, we rely on form
-//pattern matching to ensure validity of username and password. To log in, we
-//switch the mode to "feedMode" and make the necessary UI and state changes.
-
+//pattern matching to ensure validity of username and password.
 document.getElementById("loginInterface").onsubmit = function(e) {
 
   //Start spinner:
@@ -166,40 +179,77 @@ document.getElementById("modalClose2").onclick = function(e) {
 
 //add data clicked by plus circle
 document.getElementById("floatBtn").onclick = function(e) {
-   //Swap pages:
    document.getElementById("displayDataModeMainDiv").style.display = "none";
    document.getElementById("addDataDiv").style.display = "block";
-   //Change page title:
+
    document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: add data";
-   //Set label of form button appropriately
+
    document.getElementById("submitBtnLabel").textContent = "save data";
-   //Set pageLocked to true, thus indicating that we're on a page that may only
-   //be exited by clicking on the left arrow at top left
+
    pageLocked = true;
-   //When pageLocked is true, the menu  icon is the left arrow
+
    document.getElementById("menuBtnIcon").classList.remove("fa-bars");
    document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
-   //When pageLocked is true, the bottom bar buttons are disabled
+
    document.getElementById("bottomBar").classList.add("disabledButton");
 }
 
+function saveData(){
+  document.getElementById("saveIcon").classList.remove("fa-spinner", "fa-spin");
+
+  let thisUser = localStorage.getItem("userName");
+  let data = JSON.parse(localStorage.getItem("userData"));
+
+  let thisData = {}; //iniitalize empty object for this round
+
+  //store data
+  thisData.name = document.getElementById("name").value;
+  thisData.birthday = document.getElementById("birthDate").value;
+
+  localStorage.setItem("userData",JSON.stringify(data));
+
+  pageLocked = false;
+  document.getElementById("menuBtn").click();
+
+  //clear
+  document.getElementById("name").value = "";
+  document.getElementById("birthDate").value = Date.now()-(new Date()).getTimezoneOffset()*60000;
+}
+
+document.getElementById("dataForm").onsubmit = function(e) {
+  e.preventDefault(); 
+  //Start spinner
+  document.getElementById("saveIcon").classList.add("fas", "fa-spinner", "fa-spin");
+  //Set spinner to spin for one second, after which saveRoundData will be called
+  setTimeout(saveData,1000);
+}
+
+
 //add data clicked by submenu
 document.getElementById("addDataModeItem").onclick = function(e) {
-  //Swap pages:
   document.getElementById("displayDataModeMainDiv").style.display = "none";
   document.getElementById("addDataDiv").style.display = "block";
-  //Change page title:
   document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: add data";
-  //Set label of form button appropriately
+
   document.getElementById("submitBtnLabel").textContent = "save data";
-  //Set pageLocked to true, thus indicating that we're on a page that may only
-  //be exited by clicking on the left arrow at top left
+
   pageLocked = true;
-  //When pageLocked is true, the menu  icon is the left arrow
+
   document.getElementById("menuBtnIcon").classList.remove("fa-times");
-  document.getElementById("menuBtnIcon").classList.remove("fa-bars");
   document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
-  //When pageLocked is true, the bottom bar buttons are disabled
+
   document.getElementById("bottomBar").classList.add("disabledButton");
+  e.stopPropagation;
+}
+
+document.getElementById("displayDataModeItem").onclick = function(e) {
+  document.getElementById("addDataDiv").style.display = "none";
+  document.getElementById("displayDataModeMainDiv").style.display = "block";
+  document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: display data";
+  pageLocked = false;
+  document.getElementById("menuBtnIcon").classList.remove("fa-arrow-left");
+  document.getElementById("menuBtnIcon").classList.add("fa-bars");
+  //When pageLocked is true, the bottom bar buttons are disabled
+  document.getElementById("bottomBar").classList.remove("disabledButton");
 }
 
