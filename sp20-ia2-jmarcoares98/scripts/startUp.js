@@ -7,9 +7,13 @@ var menuOpen = false; //Boolean variable to capture the state of the side menu.
 var mode = "loginMode"; //Variable captures current UI mode
 
 //Associative array maps modes to page titles
-var modeToTitle = {
-    //TO DO: Fill in
+var modeToTitle = {"viewDataMode": "VIEW DATA",
+                   "addDataMode": "ADD DATA",
+                   "lodingMode": "WELCOME TO MY APP"
 };
+
+//Array of modes for the app, was introduced in class and now implementing
+var modes = ["loginMode","viewDataMode", "addDataMode"]; 
 
 //Bind bottomBarBtnClick function to all elements of class bottomBarBtn
 var bottomBtns = document.getElementsByClassName("bottomBarBtn");

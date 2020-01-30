@@ -9,8 +9,8 @@
   //menu bottom disabled, UI mode = login
   function startUp() {
     //Hide all pages except for Login Page, which is the start page.
-    //TO DO: Fill in
-
+    document.getElementById("viewDataPageDiv").style.display = "none";
+    document.getElementById("addDataPageDiv").style.display = "none";
     //Clear all text from email and password fields
     //TO DO: Fill in
 
