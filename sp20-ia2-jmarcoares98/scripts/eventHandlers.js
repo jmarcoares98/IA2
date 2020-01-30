@@ -9,9 +9,10 @@
   //menu bottom disabled, UI mode = login
   function startUp() {
     //Hide all pages except for Login Page, which is the start page.
-    document.getElementById("displayDataModeDiv").style.display = "none";
-    document.getElementById("addDataModeDiv").style.display = "none";
-    document.getElementById("addDataModeMenu").style.display = "none";
+    document.getElementById("displayDataModeMainDiv").style.display = "none";
+    document.getElementById("underConstructionModeMainDiv").style.display = "none";
+    document.getElementById("underConstructionModeMenu").style.display = "none";
+    document.getElementById("addDataDiv").style.display = "none";
 
     document.getElementById("loginModeDiv").style.display = "block";
     //Clear all text from email and password fields
@@ -51,13 +52,23 @@
 //menuBtn click: When the top-left side menu button is clicked and the menu
 //is closed, we need to open it and toggle menu state variable.
 document.getElementById("menuBtn").addEventListener("click",function(e) {
-  if (!menuOpen) {
+  if (!menuOpen && !pageLocked) {
     document.getElementById("menuBtnIcon").classList.remove("fa-bars"); 
     //Change hamburger to X when menu open
     document.getElementById("menuBtnIcon").classList.add("fa-times");
     document.getElementById("sideMenu").style.width = "250px"; //open up menu
     menuOpen = true;
     e.stopPropagation();
+  }
+  if(pageLocked) {
+    document.getElementById("addDataDiv").style.display = "none";
+    document.getElementById("displayDataModeMainDiv").style.display = "block";
+    document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: display data";
+    pageLocked = false;
+    document.getElementById("menuBtnIcon").classList.remove("fa-arrow-left");
+    document.getElementById("menuBtnIcon").classList.add("fa-bars");
+    //When pageLocked is true, the bottom bar buttons are disabled
+    document.getElementById("bottomBar").classList.remove("disabledButton");
   }
 });   
 
@@ -67,7 +78,7 @@ var bottomBarBtnClick = function() {
   if (mode != this.id) {
     //this changes the mode buttons
     document.getElementById(mode).classList.remove("menuItemSelected");
-    document.getElementById(mode + "Div").style.display = "none";
+    document.getElementById(mode + "MainDiv").style.display = "none";
     document.getElementById(mode + "Menu").style.display = "none";
     this.classList.add("menuItemSelected");
     let menuItems = document.getElementsByClassName(mode + "Item");
@@ -78,7 +89,7 @@ var bottomBarBtnClick = function() {
     //this is where the changes happen when switching modes to current mode
     mode = this.id;
     document.getElementById("topBarTitle").textContent = modeToTitle[mode];
-    document.getElementById(mode + "Div").style.display = "block";
+    document.getElementById(mode + "MainDiv").style.display = "block";
     document.getElementById(mode + "Menu").style.display = "block";
     menuItems = document.getElementsByClassName(mode + "Item");
     for (let i = 0; i < menuItems.length; ++i) {
@@ -99,7 +110,7 @@ function login() {
   //Show bottom bar buttons and highlight feed mode button
   document.getElementById("bottomBar").style.visibility = "visible";
   document.getElementById("displayDataMode").classList.add("menuItemSelected");
-  document.getElementById("addDataMode").classList.remove("menuItemSelected");
+  document.getElementById("underConstructionMode").classList.remove("menuItemSelected");
   
   //Set mode to current mode
   mode = "displayDataMode";
@@ -112,7 +123,7 @@ function login() {
 
   //hide login screen and show feed screen
   document.getElementById("loginModeDiv").style.display = "none";
-  document.getElementById(mode + "Div").style.display = "block";
+  document.getElementById(mode + "MainDiv").style.display = "block";
 }
 
 //loginInterface submit: When the login button is clicked, we rely on form
@@ -152,3 +163,43 @@ document.getElementById("modalClose2").onclick = function(e) {
   document.getElementById("aboutModal").style.display = "none";
   aboutOpen = false;
 }
+
+//add data clicked by plus circle
+document.getElementById("floatBtn").onclick = function(e) {
+   //Swap pages:
+   document.getElementById("displayDataModeMainDiv").style.display = "none";
+   document.getElementById("addDataDiv").style.display = "block";
+   //Change page title:
+   document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: add data";
+   //Set label of form button appropriately
+   document.getElementById("submitBtnLabel").textContent = "save data";
+   //Set pageLocked to true, thus indicating that we're on a page that may only
+   //be exited by clicking on the left arrow at top left
+   pageLocked = true;
+   //When pageLocked is true, the menu  icon is the left arrow
+   document.getElementById("menuBtnIcon").classList.remove("fa-bars");
+   document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
+   //When pageLocked is true, the bottom bar buttons are disabled
+   document.getElementById("bottomBar").classList.add("disabledButton");
+}
+
+//add data clicked by submenu
+document.getElementById("addDataModeItem").onclick = function(e) {
+  //Swap pages:
+  document.getElementById("displayDataModeMainDiv").style.display = "none";
+  document.getElementById("addDataDiv").style.display = "block";
+  //Change page title:
+  document.getElementById("topBarTitle").textContent = "MARCO ARES IA2: add data";
+  //Set label of form button appropriately
+  document.getElementById("submitBtnLabel").textContent = "save data";
+  //Set pageLocked to true, thus indicating that we're on a page that may only
+  //be exited by clicking on the left arrow at top left
+  pageLocked = true;
+  //When pageLocked is true, the menu  icon is the left arrow
+  document.getElementById("menuBtnIcon").classList.remove("fa-times");
+  document.getElementById("menuBtnIcon").classList.remove("fa-bars");
+  document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
+  //When pageLocked is true, the bottom bar buttons are disabled
+  document.getElementById("bottomBar").classList.add("disabledButton");
+}
+

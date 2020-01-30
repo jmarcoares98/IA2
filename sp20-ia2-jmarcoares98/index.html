@@ -71,11 +71,13 @@
     easy access to most important functionality in current mode 
   -->
   <div id = "displayDataModeMenu">
-    <a id = "displayDataModeItem"><span class="fas fa-list-alt"></span>&nbsp;data table</a>
+    <a id = "displayDataModeItem"><span class="fas fa-list-alt"></span>&nbsp;view data</a>
+    <a id = "addDataModeItem"><span class="fas fa-plus"></span>&nbsp;add data</a>
+    <a id = "editDataModeItem"><span class="fas fa-edit"></span>&nbsp;edit data</a>
   </div>
 
-  <div id = "addDataModeMenu">
-    <a id = "addDataModeItem"><span class="fas fa-plus-circle"></span>&nbsp;add data</a>
+  <div id = "underConstructionModeMenu">
+    <a id = "editDataModeItem"><span class="fas fa-wrench"></span>&nbsp;construction</a>
   </div>
 
   <a id = "aboutBtn">
@@ -93,9 +95,9 @@
 <a id="displayDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
 class="nonMenuItem fas fa-th-list"></span><span style="display:block;font-size:
 small">display data</span></a>
-<a id="addDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
-class="nonMenuItem fas fa-plus"></span><span style="display:block;font-size:
-small">add data</span></a>
+<a id="underConstructionMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
+class="nonMenuItem fas fa-wrench"></span><span style="display:block;font-size:
+small">under construction</span></a>
 </div>
 <!-- END FIXED BOTTOM BAR-->
  
@@ -137,15 +139,36 @@ small">add data</span></a>
        </center>
    </div>
  
-   <!-- Activity feed page for viewing feed -->
-   <div id="displayDataModeDiv"  class="paddedPage">
-    <h1 align="center">data table page</h1> <!-- <-- Change this-->
+   <!-- Display data page for viewing feed -->
+   <div id="displayDataModeMainDiv"  class="displayDataModeDiv paddedPage">
+    <h1 align="center">data table page</h1>
     <div w3-include-html="html/displayData.html" ></div>
+    <button id="floatBtn" class="floatbutton">
+      <span style="display:block" class="nonMenuItem fas fa-plus-circle"></button>
   </div>
 
-   <!-- Rounds page displaying the user's round history -->
-  <div id="addDataModeDiv" class="paddedPage">
-      <h1 align="center">add data page</h1>
+  <!--Add data page-->
+  <div id = "addDataDiv" class="displayDataModeDiv paddedPage">
+    <center>
+      <h2>add.</h2>
+    <form>
+      <label for = "name" >name:<br>
+      <input type="text" name="name" value="">
+      </label><br>
+      <label for="birthDate">birthday:
+        <input id="birthDate" class="form-control form-center" type="date" 
+        required>
+    </label><br>
+      <button id="submitBtn" type="submit" class="btn btn-primary btn-block btncolortheme" 
+      style="width:15%; font-size: 14px"><span id="saveIcon" class="fas fa-save">&nbsp;</span>
+      <span id="submitBtnLabel">save</span></button>
+    </form>
+    </center>
+  </div>
+
+   <!-- Add data page displaying the user's round history -->
+  <div id="underConstructionModeMainDiv" class="paddedPage">
+      <h1 align="center">under construction page</h1>
     <div w3-include-html="html/underConstruction.html" ></div>
   </div>
 
