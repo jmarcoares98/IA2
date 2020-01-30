@@ -30,6 +30,8 @@
     crossorigin="anonymous">
     <!-- Our local CSS stylesheet -->
     <link rel="stylesheet" href = "styles/index.css">
+    <link rel="shortcut icon" href="delta.png">
+
 
 </head>
  
@@ -43,15 +45,15 @@
   <div id="navBar" class="navbar">  
     <span class="navbarItems">
       <button id="menuBtn" style="background-color: transparent;
-      border-color:#13294E; text-align: center">
+      border-color:steelblue; text-align: center">
         <span id="menuBtnIcon" class="fas fa-bars" style="color:white;
         font-size: 30px; cursor:pointer; text-align: center">
         </span>
       </button>
-      <img src="http://tiny.cc/sslogo" alt="Speed Score Logo" height="38px"
+      <img src="delta.png" alt="Delta Logo" height="38px"
       width="38px">
       <span id="topBarTitle" style="color:white; font-size: 18px">
-      Welcome!</span>
+      </span>
   </div>
   
   
@@ -59,9 +61,8 @@
  <div id="sideMenu" class="sidenav" >
    <!--SIDE MENU TITLE -->
   <div class="sidenavtitle">
-      <img src='http://tiny.cc/chrisprofilepic' height='50' width='50'>
-      <span id="userID" style="font-size:14px">&nbsp;Chris
-      Hundhausen&nbsp;&nbsp;</span>
+      <span id="userID" style="font-size:20px">&nbsp;side 
+        menu&nbsp;&nbsp;</span>
    </div>
    <!--BEGIN MENU CONTENT-->
  <div id="mainMenuContent">
@@ -69,7 +70,20 @@
  <!--Mode buttons show current mode Action buttons are contextual; they provide
     easy access to most important functionality in current mode 
   -->
-  <a id="logOutBtn">"<span class="fas fa-sign-out-alt"></span>&nbsp;Log Out</a>
+  <div id = "displayDataModeMenu">
+    <a id = "displayDataModeItem"><span class="fas fa-list-alt"></span>&nbsp;view data</a>
+    <a id = "addDataModeItem"><span class="fas fa-plus"></span>&nbsp;add data</a>
+    <a id = "editDataModeItem"><span class="fas fa-edit"></span>&nbsp;edit data</a>
+  </div>
+
+  <div id = "underConstructionModeMenu">
+    <a id = "editDataModeItem"><span class="fas fa-wrench"></span>&nbsp;construction</a>
+  </div>
+
+  <a id = "aboutBtn">
+    <span class= "fas fa-info-circle"></span>&nbsp;about</a>
+  <a id="logOutBtn">
+    <span class="fas fa-sign-out-alt"></span>&nbsp;log out</a>
    <!-- END GROUP OF MODE/ACTION BUTTONS -->
 </div>
 <!-- END MAIN MENU CONTENT -->
@@ -78,12 +92,12 @@
 
 <!-- BEGIN FIXED BOTTOM BAR -->
 <div id ="bottomBar" class="bottombar" style="z-index: 100">
-<a id="viewDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
+<a id="displayDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
 class="nonMenuItem fas fa-th-list"></span><span style="display:block;font-size:
-small">View Data</span></a>
-<a id="addDataMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
-class="nonMenuItem fas fa-plus"></span><span style="display:block;font-size:
-small">Add Data</span></a>
+small">display data</span></a>
+<a id="underConstructionMode" class="bottomBarBtn"><span style="display:block; padding-top:3px"
+class="nonMenuItem fas fa-wrench"></span><span style="display:block;font-size:
+small">under construction</span></a>
 </div>
 <!-- END FIXED BOTTOM BAR-->
  
@@ -94,18 +108,18 @@ small">Add Data</span></a>
       <h1></h1>
       <form id="loginInterface">
                  <label for="emailInput" style="padding:0px;
-                 font-size:24px">Email:
+                 font-size:24px">email:
                      <input class="form-control" type="email" 
-                     placeholder="Enter Email Address" id="emailInput"
+                     placeholder="enter email address" id="emailInput"
                      pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
                      style="text-align:center;width:90%; height:10%; font-size:
                      24px" required>
                  </label>
                  <p></p>
                  <label for="passwordInput" style="padding:0px;
-                 font-size:24px">Password: 
+                 font-size:24px">password: 
                      <input class="form-control" type="password"
-                     placeholder="Enter Password" id="passwordInput"
+                     placeholder="enter password" id="passwordInput"
                      pattern="[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};\':]+"
                      style="text-align:center;width:90%; height:10%; font-size:
                      24px" required>
@@ -114,7 +128,7 @@ small">Add Data</span></a>
              <button type="submit" id="loginBtn" class="loginBtn btn btn-primary
              btn-block btncolortheme" style="width:70%; font-size: 36px">
                <span id="loginBtnIcon"></span>
-                Log In
+                log in
                 </button>
              <br />
              <a role="button" class="loginBtn"><img
@@ -125,19 +139,81 @@ small">Add Data</span></a>
        </center>
    </div>
  
-   <!-- Activity feed page for viewing feed -->
-   <div id="viewDataPageDiv"  class="paddedPage">
-    <h1 align="center">Data Table Page</h1> <!-- <-- Change this-->
-    <div w3-include-html="html/underConstruction.html" ></div>
+   <!-- Display data page for viewing feed -->
+   <div id="displayDataModeMainDiv"  class="displayDataModeDiv paddedPage">
+    <h1 align="center">data table page</h1>
+    <div w3-include-html="html/displayData.html" ></div>
+    <button id="floatBtn" class="floatbutton">
+      <span style="display:block" class="nonMenuItem fas fa-plus-circle"></button>
   </div>
 
-   <!-- Rounds page displaying the user's round history -->
-  <div id="addDataPageDiv" class="paddedPage">
-      <h1 align="center">Add Data Page</h1>
+  <!--Add data page-->
+  <div id = "addDataDiv" class="displayDataModeDiv paddedPage">
+    <center>
+      <h2>add.</h2>
+    <form id = "dataForm">
+      <label for = "name" >name:<br>
+      <input id = "name" type="text" name="name" value="">
+      </label><br>
+      <label for="birthDate">birthday:
+        <input id="birthDate" class="form-control form-center" type="date" 
+        required>
+    </label><br>
+      <button id="submitBtn" type="submit" class="btn btn-primary btn-block btncolortheme" 
+      style="width:15%; font-size: 14px"><span id="saveIcon" class="fas fa-save">&nbsp;</span>
+      <span id="submitBtnLabel">save</span></button>
+    </form>
+    </center>
+  </div>
+
+   <!-- Add data page displaying the user's round history -->
+  <div id="underConstructionModeMainDiv" class="paddedPage">
+      <h1 align="center">under construction page</h1>
     <div w3-include-html="html/underConstruction.html" ></div>
   </div>
 
   <!-- END APP PAGE DEFINITIONS -->
+
+  <!-- ABOUT BUTTON DIALOG BOX (code from class)-->
+  <div id = "aboutModal" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background: lightblue">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: left; width: 100%">
+            <b>about this app</b>
+            <button id ="modalClose" class="close"
+              style="border: 2px solid midnightblue;
+              background-color: midnightblue; color:white;
+              float: right">&times</button>
+              </h4>
+        </div>
+        <div class = "modal-body">
+          <center>
+            <img src="delta.png" height="200" width="200">
+            <h3>this is my individual assignment 2 for this class.</h3>
+            <p style="font-style:italic">cpts 489, built
+              01.29.2020<br>
+              &copy; 2020 student at washington state university. All rights reserved.
+              </p>
+          </center>
+          <p>this app was created by marco ares in his bedroom. the purpose of this creation
+            was to hopefully get a good grade in this class. this app was made by the pure energy 
+            of starbucks coffee at 2am. so shoutout starbucks and caffeine. also shoutout 
+            to all the comp sci students still up at this time. go get that bread my dudes.
+          </p>
+          <p>
+            for more information, follow me in instagram <a href="https://www.instagram.com/jmarcoares" target="_blank">
+            @jmarcoares</a> to know me better.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id= "modalClose2" class="close" style="border: 2px solid midnightblue;
+          padding: 4px; background-color: midnightblue; color: white">
+          yep</button>
+        </div>
+      </div>
+    </div>
+  </div>
     
   <!-- Begin SCRIPT section of document. -->
   

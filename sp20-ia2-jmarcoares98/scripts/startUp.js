@@ -6,14 +6,16 @@ includeHTML();
 var menuOpen = false; //Boolean variable to capture the state of the side menu.
 var mode = "loginMode"; //Variable captures current UI mode
 
+//We'll use this to indicate we're on a "locked" page where you have to click
+//left arrow to get back to main mode page.
+var pageLocked = false;
+
 //Associative array maps modes to page titles
-var modeToTitle = {"viewDataMode": "VIEW DATA",
-                   "addDataMode": "ADD DATA",
-                   "lodingMode": "WELCOME TO MY APP"
+var modeToTitle = {"loginMode": "MARCO ARES IA2: welcome!",
+                   "displayDataMode": "MARCO ARES IA2: display data",
+                   "underConstructionMode": "MARCO ARES IA2: under construction"
 };
 
-//Array of modes for the app, was introduced in class and now implementing
-var modes = ["loginMode","viewDataMode", "addDataMode"]; 
 
 //Bind bottomBarBtnClick function to all elements of class bottomBarBtn
 var bottomBtns = document.getElementsByClassName("bottomBarBtn");
