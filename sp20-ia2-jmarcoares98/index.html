@@ -45,7 +45,7 @@
   <div id="navBar" class="navbar">  
     <span class="navbarItems">
       <button id="menuBtn" style="background-color: transparent;
-      border-color:#13294E; text-align: center">
+      border-color:steelblue; text-align: center">
         <span id="menuBtnIcon" class="fas fa-bars" style="color:white;
         font-size: 30px; cursor:pointer; text-align: center">
         </span>
@@ -70,7 +70,8 @@
  <!--Mode buttons show current mode Action buttons are contextual; they provide
     easy access to most important functionality in current mode 
   -->
-  <a id="logOutBtn">"<span class="fas fa-sign-out-alt"></span>&nbsp;Log Out</a>
+  <a id = "aboutBtn" class = "aboutItem"><span class= "fas fa-info-circle"></span>&nbsp;about</a>
+  <a id="logOutBtn" class = "logoutItem">"<span class="fas fa-sign-out-alt"></span>&nbsp;log out</a>
    <!-- END GROUP OF MODE/ACTION BUTTONS -->
 </div>
 <!-- END MAIN MENU CONTENT -->
@@ -139,6 +140,47 @@ small">add data</span></a>
   </div>
 
   <!-- END APP PAGE DEFINITIONS -->
+
+  <!-- ABOUT BUTTON DIALOG BOX (code from class)-->
+  <div id = "aboutModal" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background: lightblue">
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: left; width: 100%">
+            <b>about this app</b>
+            <button id ="modalClose" class="close"
+              style="border: 2px solid midnightblue;
+              background-color: midnightblue; color:white;
+              float: right">&times</button>
+              </h4>
+        </div>
+        <div class = "modal-body">
+          <center>
+            <img src="delta.png" height="200" width="200">
+            <h3>this is my individual assignment 2 for this class.</h3>
+            <p style="font-style:italic">cpts 489, built
+              01.29.2020<br>
+              &copy; 2020 student at washington state university. All rights reserved.
+              </p>
+          </center>
+          <p>this app was created by marco ares in his bedroom. the purpose of this creation
+            was to hopefully get a good grade in this class. this app was made by the pure energy 
+            of starbucks coffee at 2am. so shoutout starbucks and caffeine. also shoutout 
+            to all the comp sci students still up at this time. go get that bread my dudes.
+          </p>
+          <p>
+            for more information, follow me in instagram <a href="https://www.instagram.com/jmarcoares" target="_blank">
+            @jmarcoares</a> to know me better.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id= "modalClose2" class="close" style="border: 2px solid midnightblue;
+          padding: 4px; background-color: midnightblue; color: white">
+          yep</button>
+        </div>
+      </div>
+    </div>
+  </div>
     
   <!-- Begin SCRIPT section of document. -->
   

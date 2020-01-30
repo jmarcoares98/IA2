@@ -91,6 +91,22 @@
             text-align:center;
         }
 
+        .aboutItem {
+              position: fixed;
+              padding: 0 20px;
+              bottom: 55px;
+              width: 19.6%;
+              font-size: 16px;
+        }
+
+        .logoutItem {
+              position: fixed;
+              padding: 0 20px;
+              bottom: 0;
+              width: 19.6%;
+              font-size: 16px;
+        }
+
         /* side menu styling when menu item selected */
         .menuItemSelected {
                  pointer-events: none;

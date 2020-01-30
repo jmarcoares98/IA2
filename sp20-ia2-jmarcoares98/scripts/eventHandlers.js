@@ -132,3 +132,22 @@ document.getElementById("logOutBtn").onclick = function(e) {
   //Restore starting app state
   startUp();
 };
+
+//aboutBtn click:
+var aboutOpen = false;
+document.getElementById("aboutBtn").onclick = function(e) {
+  if(!aboutOpen){
+    document.getElementById("aboutModal").style.display = "block"
+    aboutOpen = true;
+  }
+};
+
+//closing the about dialog
+document.getElementById("modalClose").onclick = function(e) {
+  document.getElementById("aboutModal").style.display = "none";
+  aboutOpen = false;
+}
+document.getElementById("modalClose2").onclick = function(e) {
+  document.getElementById("aboutModal").style.display = "none";
+  aboutOpen = false;
+}
