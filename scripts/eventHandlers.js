@@ -236,7 +236,8 @@ function saveData(){
   if(submitBtnLabel == "save data"){
     addNew = true;
     thisData.nameNum = ++(data[thisUser].nameCount);
-    localStorage.setItem(JSON.stringify(thisData.nameNum), JSON.stringify(thisData));
+    data[thisUser].name[thisData.nameNum] = thisData;
+    //localStorage.setItem("userData", JSON.stringify(thisData));
   }
   else{
     addNew = false;
