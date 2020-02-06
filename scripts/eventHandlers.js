@@ -36,6 +36,17 @@
 
     document.getElementById("birthDate").valueAsNumber = 
       Date.now()-(new Date()).getTimezoneOffset()*60000;
+
+    let dataTable = document.getElementById("myDataTable");
+
+    if(!dataTable.rows[1].innerHTML.include ("colspan")){
+      while(dataTable.rows.length > 1 ){
+        dataTable.deleteRow(1);
+      }
+
+      let newRow = dataTable.insertRow();
+      newRow.innerHTML = "<td colspan='2' style='font-style: italic'>no data logged</td>"; 
+    }
   }
 
   //document click: When the user clicks anywhere in the doc and the menu is open
@@ -237,6 +248,33 @@ function saveData(){
   //clear
   document.getElementById("name").value = "";
   document.getElementById("birthDate").value = Date.now()-(new Date()).getTimezoneOffset()*60000;
+}
+
+function addToDataTable(add, nameIndex){
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let nameData = data[user].name[nameIndex];
+  let dataTable = document.getElementById("myDataTable");
+  let dataRow;
+
+  if(add){
+    if(dataTable.rows[1].innerHTML.includes ("colspan")){
+      dataTable.deleteRow(1);
+    }
+
+    dataRow = dataTable.insertRow(1);
+    dataRow.id = "r-" + nameIndex;
+  }
+  else{
+    dataRow = document.getElementById("r-"+nameIndex);
+  }
+
+  dataRow.innerHTML = "<td>" + nameData.name + "</td><td>" +
+  nameData.birthday + 
+  "<td><button onclick='editRound(" + nameIndex + ")'><span class='fas fa-eye'>" +
+  "</span>&nbsp;<span class='fas fa-edit'></span></button></td>" +
+  "<td><button onclick='confirmDelete(" + nameIndex + ")'>" +
+  "<span class='fas fa-trash'></span></button></td>";
 }
 
 document.getElementById("dataForm").onsubmit = function(e) {
