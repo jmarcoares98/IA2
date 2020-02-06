@@ -36,6 +36,17 @@
 
     document.getElementById("birthDate").valueAsNumber = 
       Date.now()-(new Date()).getTimezoneOffset()*60000;
+
+    let dataTable = document.getElementById("myDataTable");
+
+    if(!dataTable.rows[1].innerHTML.includes ("colspan")){
+      while(dataTable.rows.length > 1 ){
+        dataTable.deleteRow(1);
+      }
+
+      let newRow = dataTable.insertRow();
+      newRow.innerHTML = "<td colspan='4' style='font-style: italic'>no data logged</td>"; 
+    }
   }
 
   //document click: When the user clicks anywhere in the doc and the menu is open
@@ -130,13 +141,18 @@ function login() {
   let data = localStorage.getItem("userData");
   if(data == null) {
     localStorage.setItem("userData",
-    JSON.stringify({thisUser : {"name" : "", "birthday": 0}})); 
+    JSON.stringify({thisUser : {"name" : {}, "nameCount": 0}})); 
   }
   else{
     data = JSON.parse(data);
     if  (!data.hasOwnProperty(thisUser)) { 
-      data[thisUser] = {"name": "", "birthday": 0}; 
+      data[thisUser] = {"name": {}, "nameCount": 0}; 
       localStorage.setItem("userData",JSON.stringify(data));
+    }
+    else{
+      for (const name in data[thisUser].name){
+        addToDataTable(true, name);
+      }
     }
   }
 }
@@ -150,6 +166,14 @@ document.getElementById("loginInterface").onsubmit = function(e) {
   setTimeout(login,3000);
   e.preventDefault(); //Prevents form refresh -- the default behavior
 };
+
+document.getElementById("dataForm").onsubmit = function(e){
+  e.preventDefault();
+
+  document.getElementById("saveIcon").classList.add("fas", "fa-spinner", "fa-spin");
+  
+  setTimeout(saveData,1000);
+}
   
 //logOutBtn click: When the user logs out, we need to reset the app to its start
 //state, with the login page visible
@@ -200,11 +224,26 @@ function saveData(){
   let thisUser = localStorage.getItem("userName");
   let data = JSON.parse(localStorage.getItem("userData"));
 
-  let thisData = {}; //iniitalize empty object for this round
+  let thisData = {}; 
 
   //store data
   thisData.name = document.getElementById("name").value;
   thisData.birthday = document.getElementById("birthDate").value;
+
+  let submitBtnLabel = document.getElementById("submitBtnLabel").textContent;
+  let addNew;
+
+  if(submitBtnLabel == "save data"){
+    addNew = true;
+    thisData.nameNum = ++(data[thisUser].nameCount);
+    data[thisUser].name[thisData.nameNum] = thisData;
+  }
+  else{
+    addNew = false;
+    thisData.nameNum = Number(localStorage.getItem("nameIndex"));
+  }
+
+  data[thisUser].name[thisData.nameNum] = thisData;
 
   localStorage.setItem("userData",JSON.stringify(data));
 
@@ -214,13 +253,42 @@ function saveData(){
   //clear
   document.getElementById("name").value = "";
   document.getElementById("birthDate").value = Date.now()-(new Date()).getTimezoneOffset()*60000;
+
+  addToDataTable(addNew, thisData.nameNum);
+}
+
+function addToDataTable(add, nameIndex){
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let nameData = data[user].name[nameIndex];
+  let dataTable = document.getElementById("myDataTable");
+  let dataRow;
+
+  if(add){
+    if(dataTable.rows[1].innerHTML.includes ("colspan")){
+      dataTable.deleteRow(1);
+    }
+
+    dataRow = dataTable.insertRow(1);
+    dataRow.id = "r-" + nameIndex;
+  }
+  else{
+    dataRow = document.getElementById("r-"+nameIndex);
+  }
+
+  dataRow.innerHTML = "<td>" + nameData.name + "</td><td>" +
+  nameData.birthday + 
+  "<td><button onclick='editName(" + nameIndex + ")'><span class='fas fa-eye'>" +
+  "</span>&nbsp;<span class='fas fa-edit'></span></button></td>" +
+  "<td><button onclick='confirmDelete(" + nameIndex + ")'>" +
+  "<span class='fas fa-trash'></span></button></td>";
 }
 
 document.getElementById("dataForm").onsubmit = function(e) {
   e.preventDefault(); 
   //Start spinner
   document.getElementById("saveIcon").classList.add("fas", "fa-spinner", "fa-spin");
-  //Set spinner to spin for one second, after which saveRoundData will be called
+  //Set spinner to spin for one second, after which saveData will be called
   setTimeout(saveData,1000);
 }
 
@@ -251,5 +319,69 @@ document.getElementById("displayDataModeItem").onclick = function(e) {
   document.getElementById("menuBtnIcon").classList.add("fa-bars");
   //When pageLocked is true, the bottom bar buttons are disabled
   document.getElementById("bottomBar").classList.remove("disabledButton");
+}
+
+function confirmDelete(nameIndex) {
+  localStorage.setItem("pendingDelete",nameIndex); 
+  //Show the modal dialog box
+  document.getElementById("deleteNameModal").style.display = "block";
+}
+
+function cancelDelete() {
+  localStorage.setItem("pendingDelete","");
+  document.getElementById("deleteNameModal").style.display = "none";
+}
+
+//code from class
+function deleteName() {
+  document.getElementById("deleteNameModal").style.display = "none";
+
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let nameIndex = Number(localStorage.getItem("pendingDelete"));
+  let row, dataTable, newRow;
+
+  delete data[user].name[nameIndex];
+  localStorage.setItem("userData", JSON.stringify(data));
+
+  row = document.getElementById("r-"+ nameIndex);
+  row.parentNode.removeChild(row);
+
+  dataTable = document.getElementById("myDataTable");
+
+  if (dataTable.rows.length == 1){
+    newRow = dataTable.insertRow();
+    newRow.innerHTML = "<td colspan='4' style='font-style: italic'>no data logged</td>"
+  }
+}
+
+function editName(nameIndex){
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let newData = data[user].name[nameIndex];
+
+  //this is where the update begins
+  document.getElementById("name").value = newData.name;
+  document.getElementById("birthDate").value = newData.birthday;
+
+  localStorage.setItem("nameIndex", nameIndex);
+
+  document.getElementById("submitBtnLabel").textContent = "update data";
+  transitionToLockedPage("addDataDiv", "view/edit")
+}
+
+//code from class
+function transitionToLockedPage(lockedPageId, lockedPageTitle) {
+  document.getElementById(mode + "MainDiv").style.display = "none";
+  document.getElementById(lockedPageId).style.display = "block";
+
+  document.getElementById("topBarTitle").textContent = lockedPageTitle;
+  pageLocked = true;
+
+  document.getElementById("menuBtnIcon").classList.remove("fa-times");
+  document.getElementById("menuBtnIcon").classList.remove("fa-bars");
+  document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
+  //When pageLocked is true, the bottom bar buttons are disabled
+  document.getElementById("bottomBar").classList.add("disabledButton");
 }
 
