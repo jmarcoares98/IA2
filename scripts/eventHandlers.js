@@ -149,6 +149,11 @@ function login() {
       data[thisUser] = {"name": {}, "nameCount": 0}; 
       localStorage.setItem("userData",JSON.stringify(data));
     }
+    else{
+      for (const name in data[thisUser].name){
+        addToDataTable(true, name);
+      }
+    }
   }
 }
 
