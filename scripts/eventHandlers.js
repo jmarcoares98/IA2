@@ -237,6 +237,8 @@ function saveData(){
     addNew = true;
     thisData.nameNum = ++(data[thisUser].nameCount);
     data[thisUser].name[thisData.nameNum] = thisData;
+    data[thisUser].name = thisData.name;
+    data[thisUser].birthday = thisData.birthday;
   }
   else{
     addNew = false;
