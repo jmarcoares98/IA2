@@ -314,3 +314,37 @@ document.getElementById("displayDataModeItem").onclick = function(e) {
   document.getElementById("bottomBar").classList.remove("disabledButton");
 }
 
+function confirmDelete(nameIndex) {
+  //Preserve index of round to delete for deleteRound function
+  localStorage.setItem("pendingDelete",nameIndex); 
+  //Show the modal dialog box
+  document.getElementById("deleteRoundModal").style.display = "block";
+}
+
+function cancelDelete() {
+  localStorage.setItem("pendingDelete","");
+  document.getElementById("deleteRoundModal").style.display = "none";
+}
+
+//code from class
+function deleteRound() {
+  document.getElementById("deleteRoundModal").style.display = "none";
+
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let nameIndex = Number(localStorage.getItem("pendingDelete"));
+  let row, dataTable, newRow;
+
+  delete data[user].name[nameIndex];
+  localStorage.setItem("userData", JSON.stringify(data));
+
+  row = document.getElementById("r-"+ nameIndex);
+  row.parentNode.removeChild(row);
+
+  dataTable = document.getElementById("dataTable");
+
+  if (dataTable.rows.length == 1){
+    newRow = dataTable.insertRow();
+    newRow.innerHTML = "<td colspan='2' style='font-style: italic'>no data logged</td>"
+  }
+}
