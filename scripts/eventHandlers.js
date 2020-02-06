@@ -130,12 +130,12 @@ function login() {
   let data = localStorage.getItem("userData");
   if(data == null) {
     localStorage.setItem("userData",
-    JSON.stringify({thisUser : {"name" : "", "birthday": 0}})); 
+    JSON.stringify({thisUser : {"name" : {}, "nameCount": 0}})); 
   }
   else{
     data = JSON.parse(data);
     if  (!data.hasOwnProperty(thisUser)) { 
-      data[thisUser] = {"name": "", "birthday": 0}; 
+      data[thisUser] = {"name": {}, "nameCount": 0}; 
       localStorage.setItem("userData",JSON.stringify(data));
     }
   }
@@ -150,6 +150,14 @@ document.getElementById("loginInterface").onsubmit = function(e) {
   setTimeout(login,3000);
   e.preventDefault(); //Prevents form refresh -- the default behavior
 };
+
+document.getElementById("dataForm").onsubmit = function(e){
+  e.preventDefault();
+
+  document.getElementById("saveIcon").classList.add("fas", "fa-spinner", "fa-spin");
+  
+  setTimeout(saveData,1000);
+}
   
 //logOutBtn click: When the user logs out, we need to reset the app to its start
 //state, with the login page visible
@@ -205,6 +213,21 @@ function saveData(){
   //store data
   thisData.name = document.getElementById("name").value;
   thisData.birthday = document.getElementById("birthDate").value;
+
+  let submitBtnLabel = document.getElementById("submitBtnLabel").textContent;
+  let addNew;
+
+  if(submitBtnLabel == "save data"){
+    adNew = true;
+    thisData.nameNum = ++(data[thisUser].nameCount);
+    data[thisUser].name[thisData.nameNum] = thisData;
+  }
+  else{
+    addNew = false;
+    thisData.nameNum = Number(localStorage.getItem("nameIndex"));
+  }
+
+  data[thisUser].name[thisData.nameNum] = thisData;
 
   localStorage.setItem("userData",JSON.stringify(data));
 
