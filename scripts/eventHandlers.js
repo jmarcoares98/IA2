@@ -39,13 +39,13 @@
 
     let dataTable = document.getElementById("myDataTable");
 
-    if(!dataTable.rows[1].innerHTML.include ("colspan")){
+    if(!dataTable.rows[1].innerHTML.includes ("colspan")){
       while(dataTable.rows.length > 1 ){
         dataTable.deleteRow(1);
       }
 
       let newRow = dataTable.insertRow();
-      newRow.innerHTML = "<td colspan='2' style='font-style: italic'>no data logged</td>"; 
+      newRow.innerHTML = "<td colspan='4' style='font-style: italic'>no data logged</td>"; 
     }
   }
 
@@ -219,7 +219,7 @@ function saveData(){
   let thisUser = localStorage.getItem("userName");
   let data = JSON.parse(localStorage.getItem("userData"));
 
-  let thisData = {}; //iniitalize empty object for this round
+  let thisData = {}; 
 
   //store data
   thisData.name = document.getElementById("name").value;
@@ -229,7 +229,7 @@ function saveData(){
   let addNew;
 
   if(submitBtnLabel == "save data"){
-    adNew = true;
+    addNew = true;
     thisData.nameNum = ++(data[thisUser].nameCount);
     data[thisUser].name[thisData.nameNum] = thisData;
   }
@@ -248,6 +248,8 @@ function saveData(){
   //clear
   document.getElementById("name").value = "";
   document.getElementById("birthDate").value = Date.now()-(new Date()).getTimezoneOffset()*60000;
+
+  addToDataTable(addNew, thisData.nameNum);
 }
 
 function addToDataTable(add, nameIndex){
@@ -271,7 +273,7 @@ function addToDataTable(add, nameIndex){
 
   dataRow.innerHTML = "<td>" + nameData.name + "</td><td>" +
   nameData.birthday + 
-  "<td><button onclick='editRound(" + nameIndex + ")'><span class='fas fa-eye'>" +
+  "<td><button onclick='editName(" + nameIndex + ")'><span class='fas fa-eye'>" +
   "</span>&nbsp;<span class='fas fa-edit'></span></button></td>" +
   "<td><button onclick='confirmDelete(" + nameIndex + ")'>" +
   "<span class='fas fa-trash'></span></button></td>";
@@ -281,7 +283,7 @@ document.getElementById("dataForm").onsubmit = function(e) {
   e.preventDefault(); 
   //Start spinner
   document.getElementById("saveIcon").classList.add("fas", "fa-spinner", "fa-spin");
-  //Set spinner to spin for one second, after which saveRoundData will be called
+  //Set spinner to spin for one second, after which saveData will be called
   setTimeout(saveData,1000);
 }
 
@@ -315,20 +317,19 @@ document.getElementById("displayDataModeItem").onclick = function(e) {
 }
 
 function confirmDelete(nameIndex) {
-  //Preserve index of round to delete for deleteRound function
   localStorage.setItem("pendingDelete",nameIndex); 
   //Show the modal dialog box
-  document.getElementById("deleteRoundModal").style.display = "block";
+  document.getElementById("deleteNameModal").style.display = "block";
 }
 
 function cancelDelete() {
   localStorage.setItem("pendingDelete","");
-  document.getElementById("deleteRoundModal").style.display = "none";
+  document.getElementById("deleteNameModal").style.display = "none";
 }
 
 //code from class
-function deleteRound() {
-  document.getElementById("deleteRoundModal").style.display = "none";
+function deleteName() {
+  document.getElementById("deleteNameModal").style.display = "none";
 
   let data = JSON.parse(localStorage.getItem("userData"));
   let user = localStorage.getItem("userName");
@@ -341,10 +342,41 @@ function deleteRound() {
   row = document.getElementById("r-"+ nameIndex);
   row.parentNode.removeChild(row);
 
-  dataTable = document.getElementById("dataTable");
+  dataTable = document.getElementById("myDataTable");
 
   if (dataTable.rows.length == 1){
     newRow = dataTable.insertRow();
-    newRow.innerHTML = "<td colspan='2' style='font-style: italic'>no data logged</td>"
+    newRow.innerHTML = "<td colspan='4' style='font-style: italic'>no data logged</td>"
   }
 }
+
+function editName(nameIndex){
+  let data = JSON.parse(localStorage.getItem("userData"));
+  let user = localStorage.getItem("userName");
+  let newData = data[user].name[nameIndex];
+
+  //this is where the update begins
+  document.getElementById("name").value = newData.name;
+  document.getElementById("birthDate").value = newData.birthday;
+
+  localStorage.setItem("nameIndex", nameIndex);
+
+  document.getElementById("submitBtnLabel").textContent = "update data";
+  transitionToLockedPage("addDataDiv", "view/edit")
+}
+
+//code from class
+function transitionToLockedPage(lockedPageId, lockedPageTitle) {
+  document.getElementById(mode + "MainDiv").style.display = "none";
+  document.getElementById(lockedPageId).style.display = "block";
+
+  document.getElementById("topBarTitle").textContent = lockedPageTitle;
+  pageLocked = true;
+
+  document.getElementById("menuBtnIcon").classList.remove("fa-times");
+  document.getElementById("menuBtnIcon").classList.remove("fa-bars");
+  document.getElementById("menuBtnIcon").classList.add("fa-arrow-left");
+  //When pageLocked is true, the bottom bar buttons are disabled
+  document.getElementById("bottomBar").classList.add("disabledButton");
+}
+
